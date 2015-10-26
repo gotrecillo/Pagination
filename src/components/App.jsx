@@ -7,9 +7,6 @@ export default React.createClass({
   getInitialState: function(){
     return {
       videoData: [],
-      watchingVideos: [],
-      currentVideo: 0,
-      totalVideos: 0,
       actualPage: 0,
       totalPages: 0,
       videosPerPage: 10,
@@ -22,11 +19,10 @@ export default React.createClass({
 
   _retrieveVideos: function(){
     $.getJSON( "http://jetclips.herokuapp.com/api/v1/videos/489159771140559", function( data ) {
-       let length = data.length;
-       let totalPages = Math.ceil(length / this.state.videosPerPage);
+       let totalVideos = data.length;
+       let totalPages = Math.ceil(totalVideos / this.state.videosPerPage);
        this.setState({
         videoData: data,
-        totalVideos: length,
         actualPage: 1,
         totalPages: totalPages,
       });
@@ -44,6 +40,7 @@ export default React.createClass({
       <div className="app-wrapper">
         <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
         <VideoViewersWrapper videos={this.state.videoData} actualPage={this.state.actualPage} videosPerPage={this.state.videosPerPage} />
+        <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
       </div>
     );
   }
