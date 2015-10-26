@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 
 require('./style.css');
-require('bootstrap/dist/css/bootstrap.min.css');
 
 ReactDOM.render(
   <App />,
