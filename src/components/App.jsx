@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import PageList from './PageList.jsx';
 import VideoViewersWrapper from './VideoViewersWrapper.jsx';
+import PageController from './PageController.jsx';
 
 export default React.createClass({
   getInitialState: function(){
@@ -36,12 +37,18 @@ export default React.createClass({
   },
 
   render: function() {
-    return (
-      <div className="app-wrapper">
-        <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
-        <VideoViewersWrapper videos={this.state.videoData} actualPage={this.state.actualPage} videosPerPage={this.state.videosPerPage} />
-        <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
-      </div>
-    );
+    if (this.state.videoData.length === 0){
+      return <div className="app-wrapper"></div>;
+    }else {
+      return (
+        <div className="app-wrapper">
+          <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
+          <PageController totalPages={this.state.totalPages} onChangePage={this._handleChangePage}/>
+          <VideoViewersWrapper videos={this.state.videoData} actualPage={this.state.actualPage} videosPerPage={this.state.videosPerPage} />
+          <PageController totalPages={this.state.totalPages} onChangePage={this._handleChangePage}/>
+          <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
+        </div>
+      );
+    }
   }
 });
