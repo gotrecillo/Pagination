@@ -6,17 +6,13 @@ export default React.createClass({
   },
 
   render: function() {
-    if (this.props.video === undefined) {
-      return (
-        <div className="video-viewer"></div>
-        );
-    }else {
-      let title = this.props.video.name || "N/A";
-      return (
-        <div className="video-viewer">
-          <video controls src={this.props.video.source}/>
-          <p>Title: {title}</p>
-        </div>);
-    }
+    let title = this.props.video.name || "N/A";
+    return (
+      <div className="video-viewer">
+        <video controls src={this.props.video.source}/>
+        <p>Title: {title}</p>
+      </div>
+    );
   }
+
 });

@@ -8,6 +8,7 @@ export default React.createClass({
   getInitialState: function(){
     return {
       videoData: [],
+      watchedVideos: [],
       actualPage: 0,
       totalPages: 0,
       videosPerPage: 10,
@@ -26,13 +27,18 @@ export default React.createClass({
         videoData: data,
         actualPage: 1,
         totalPages: totalPages,
+        watchedVideos: data.slice(0, this.state.videosPerPage + 1)
       });
     }.bind(this));
   },
 
   _handleChangePage: function(page) {
+    let firstIndex = (page - 1) * this.state.videosPerPage;
+    let lastIndex = firstIndex + this.state.videosPerPage;
+    let watchedVideos = this.state.videoData.slice(firstIndex, lastIndex);
     this.setState({
-      actualPage: page
+      actualPage: page,
+      watchedVideos: watchedVideos
     });
   },
 
@@ -44,7 +50,7 @@ export default React.createClass({
         <div className="app-wrapper">
           <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
           <PageController totalPages={this.state.totalPages} onChangePage={this._handleChangePage}/>
-          <VideoViewersWrapper videos={this.state.videoData} actualPage={this.state.actualPage} videosPerPage={this.state.videosPerPage} />
+          <VideoViewersWrapper watchedVideos={this.state.watchedVideos} actualPage={this.state.actualPage} videosPerPage={this.state.videosPerPage} />
           <PageController totalPages={this.state.totalPages} onChangePage={this._handleChangePage}/>
           <PageList actualPage={this.state.actualPage} totalPages={this.state.totalPages} onChangePage={this._handleChangePage} />
         </div>
